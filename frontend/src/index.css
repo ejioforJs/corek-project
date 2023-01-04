@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.courseInfos {
+  @apply basis-1/2 py-3 bg-gray-100 flex flex-row space-x-2.5 items-center text-sm justify-center cursor-pointer
+}
+
+.globalFont{
+    font-family: 'Roboto Slab', sans-serif;
+}
+.topCategory{
+    background-image: url("./assets/topCategory.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.advertise{
+  background-image: url("./assets/ads.png");
+  background-repeat: repeat;
+}
+
+.link-underline{
+    border-bottom-width: 0;
+    background-image:linear-gradient(transparent, transparent), linear-gradient(#fff, #fff);
+    background-size: 0 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size .3s ease-in-out
+  }
+
+  .link-underline-black{
+    background-image: linear-gradient(transparent, transparent),linear-gradient(rgb(115,217,188), rgb(115,217,188));
+  }
+
+  .link-underline:hover{
+    background-size: 100% 2px;
+    background-position: 0 100%;
+    cursor: pointer;
+  }
+
+  .link-underline-active{
+    background-image: linear-gradient(transparent, transparent),linear-gradient(rgb(115,217,188), rgb(115,217,188));
+    background-size: 100% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size .5s ease-in-out;
+    border-bottom-width: 2;
+    cursor: pointer;
+    color: black;
+  }
+
+  .rating span {
+    color: #002fff;
+  }
