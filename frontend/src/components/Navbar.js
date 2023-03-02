@@ -4,8 +4,11 @@ import { GoSearch } from "react-icons/go";
 import { Link, useLocation, useParams } from "react-router-dom";
 import image from "../assets/corek.png";
 import { Store } from "../Store";
+import ForgotPassword from "./ForgotPassword";
 import Login from "./Login";
+import ResetPassword from "./ResetPassword";
 import Signup from "./Signup";
+import { IoIosArrowDown } from "react-icons/io";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -64,18 +67,35 @@ export default function Navbar() {
       contactus: false,
     }
   );
+  const [accountdropdown, setAccountdropdown] = useState(false);
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { addSearch } = state;
+  const { addSearch, userInfo } = state;
 
   const [sidesearch, setSidesearch] = useState(false);
   const [sidelogin, setSidelogin] = useState(false);
   const [sidesignup, setSidesignup] = useState(false);
+  const [sideforgotpassword, setSideforgotpassword] = useState(false);
+  const [sideresetpassword, setSideresetpassword] = useState(false);
   const [search, setSearch] = useState("");
+  const [dashboard, setDashboard] = useState(false);
 
   const location = useLocation();
+  const [hash, setHash] = useState(null);
   const params = useParams();
   const { slug } = params;
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const singlevalue = queryParams.get("hash");
+    if (!singlevalue) return;
+    setSidesearch(false);
+    setSidelogin(false);
+    setSidesignup(false);
+    setSideforgotpassword(false);
+    setHash(singlevalue);
+    setSideresetpassword(true);
+  }, [location.search]);
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -86,6 +106,8 @@ export default function Navbar() {
       dispatch({ type: "ABOUTUS_SUCCESS" });
     } else if (location.pathname === "/contactus") {
       dispatch({ type: "CONTACTUS_SUCCESS" });
+    } else if (location.pathname === "/dashboardscreen") {
+      setDashboard(true);
     } else {
       dispatch({ type: "CASES_FALSE" });
     }
@@ -97,14 +119,26 @@ export default function Navbar() {
       <Login
         sidelogin={sidelogin}
         setSidelogin={setSidelogin}
-        sidesignup={sidesignup}
         setSidesignup={setSidesignup}
+        setSideforgotpassword={setSideforgotpassword}
       />
       <Signup
-        sidelogin={sidelogin}
         setSidelogin={setSidelogin}
         sidesignup={sidesignup}
         setSidesignup={setSidesignup}
+      />
+      <ForgotPassword
+        sideforgotpassword={sideforgotpassword}
+        setSideforgotpassword={setSideforgotpassword}
+        sideresetpassword={sideresetpassword}
+        setSideresetpassword={setSideresetpassword}
+      />
+      <ResetPassword
+        sideforgotpassword={sideforgotpassword}
+        setSideforgotpassword={setSideforgotpassword}
+        sideresetpassword={sideresetpassword}
+        setSideresetpassword={setSideresetpassword}
+        hash={hash}
       />
       <div
         className={`fixed flex items-center justify-center ${
@@ -177,52 +211,30 @@ export default function Navbar() {
         <div className="hidden md:flex flex-row md:w-auto" id="navbar-default">
           <ul className="flex flex-row items-center space-x-8 text-sm font-medium px-4 border-r bg-transparent z-40">
             <li
-              className={
-                home
-                  ? "link-underline-active"
-                  : "link-underline link-underline-black"
-              }
+              className={home ? "text-corekColor1" : "textHover text-white"}
               onClick={() => dispatch({ type: "HOME_SUCCESS" })}
             >
-              <Link to="/" className="text-white">
-                Home
-              </Link>
+              <Link to="/">Home</Link>
             </li>
             <li
-              className={
-                courses
-                  ? "link-underline-active"
-                  : "link-underline link-underline-black"
-              }
+              className={courses ? "text-corekColor1" : "textHover text-white"}
               onClick={() => dispatch({ type: "COURSES_SUCCESS" })}
             >
-              <Link to="/courses" className="text-white">
-                Courses
-              </Link>
+              <Link to="/courses">Courses</Link>
             </li>
             <li
-              className={
-                aboutus
-                  ? "link-underline-active"
-                  : "link-underline link-underline-black"
-              }
+              className={aboutus ? "text-corekColor1" : "textHover text-white"}
               onClick={() => dispatch({ type: "ABOUTUS_SUCCESS" })}
             >
-              <Link to="/aboutus" className="text-white">
-                About Us
-              </Link>
+              <Link to="/aboutus">About Us</Link>
             </li>
             <li
               className={
-                contactus
-                  ? "link-underline-active"
-                  : "link-underline link-underline-black"
+                contactus ? "text-corekColor1" : "textHover text-white"
               }
               onClick={() => dispatch({ type: "CONTACTUS_SUCCESS" })}
             >
-              <Link to="/contactus" className="text-white">
-                Contact Us
-              </Link>
+              <Link to="/contactus">Contact Us</Link>
             </li>
           </ul>
           <ul className="flex flex-row items-center space-x-6 text-sm font-medium pl-8 bg-transparent z-40">
@@ -231,19 +243,64 @@ export default function Navbar() {
               onClick={() => setSidesearch(!sidesearch)}
             >
               <span
-                className="text-white flex items-center text-xl hover:text-corekColor1 duration-300"
+                className="text-white flex items-center text-xl textHover"
                 aria-current="page"
               >
                 <AiOutlineSearch />
               </span>
             </li>
-            <li>
-              <button 
-              onClick={() => setSidelogin(true)}
-              className="text-black bg-corekColor1 px-4 py-1.5 rounded-md hover:bg-transparent border border-corekColor1 hover:text-white duration-500">
-                Login
-              </button>
-            </li>
+            {userInfo ? (
+              <li
+                onMouseLeave={() => {
+                  setAccountdropdown(false);
+                }}
+              >
+                <li
+                  onMouseEnter={() => {
+                    setAccountdropdown(true);
+                  }}
+                  className="flex flex-row items-center gap-1 cursor-pointer text-black bg-corekColor1 px-4 py-1.5 rounded-md hover:bg-transparent border border-corekColor1 hover:text-white duration-300"
+                >
+                  <span>PROFILE</span>
+                  <span>
+                    <IoIosArrowDown />
+                  </span>
+                </li>
+                <div
+                  className={`bg-white text-base absolute z-0 overflow-hidden duration-500 rounded shadow-xl mb-1
+          ${accountdropdown ? "max-h-40 py-4 px-6" : "max-h-0"}`}
+                >
+                  <ul className="flex flex-col gap-3 text-sm">
+                    <li
+                      className={`textHover ${
+                        dashboard ? "text-corekColor1" : ""
+                      }`}
+                    >
+                      <Link to="/dashboardscreen">Dashboard</Link>
+                    </li>
+                    <li className="textHover">
+                      <Link
+                        onClick={() => {ctxDispatch({ type: "USER_SIGNOUT" });
+                      setAccountdropdown(false)
+                      }}
+                        to="/"
+                      >
+                        Log Out
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            ) : (
+              <li>
+                <button
+                  onClick={() => setSidelogin(true)}
+                  className="text-black bg-corekColor1 px-4 py-1.5 rounded-md hover:bg-transparent border border-corekColor1 hover:text-white duration-500"
+                >
+                  Login
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </div>

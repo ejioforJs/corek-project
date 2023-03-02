@@ -1,11 +1,41 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { toast } from 'react-toastify';
+import { Store } from '../Store.js';
+import { getError } from '../utils.js';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios'
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-const Login = ({ sidelogin, setSidelogin, sidesignup, setSidesignup }) => {
+const Login = ({ sidelogin, setSidelogin, setSidesignup, setSideforgotpassword }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false)
 
-  const loginSubmitHandler = () => {};
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const {userInfo} = state
+
+  const loginSubmitHandler = async (e) => {
+    e.preventDefault()
+    try{
+        const {data} = await axios.post('/api/users/login', {
+            username,
+            password
+        })
+        ctxDispatch({type: 'USER_SIGNIN', payload: data})
+        localStorage.setItem('userInfo', JSON.stringify(data))
+        setSidelogin(false)
+        toast.success("login successfully")
+        setUsername("")
+        setPassword("")
+        setShowPassword(false)
+        navigate('/dashboardscreen')
+    }
+    catch(err){
+        toast.error(getError(err))
+    }
+  };
 
   return (
     <div
@@ -35,23 +65,38 @@ const Login = ({ sidelogin, setSidelogin, sidesignup, setSidesignup }) => {
               className="border w-full py-2 px-3 outline-none border-gray-400 rounded duration-500 focus:border-corekColor1"
               name="username"
               type="text"
-              placeholder="username or email"
+              placeholder="username"
             />
           </div>
-          <div className="text-sm py-2">
+          <div className="text-sm py-2 relative">
             <input
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="border py-2 px-3 w-full outline-none border-gray-400 rounded duration-500 focus:border-corekColor1"
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="password"
             />
+            <div
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <FaEye className="h-6 font-semibold" />
+                  ) : (
+                    <FaEyeSlash className="h-6 font-semibold" />
+                  )}
+                </div>
           </div>
           <div className="py-5">
-            <div className="text-corekColor2 cursor-pointer text-right text-sm mb-2 hover:underline">
-              Lost your password?
+            <div 
+            onClick={() => {
+              setSidelogin(false);
+              setSideforgotpassword(true)
+            }}
+            className="text-red-500 font-semibold cursor-pointer text-right text-sm mb-2 hover:underline">
+              forgot your password?
             </div>
             <button
               type="submit"
@@ -66,7 +111,7 @@ const Login = ({ sidelogin, setSidelogin, sidesignup, setSidesignup }) => {
                 setSidelogin(false);
                 setSidesignup(true);
               }}
-              className="text-corekColor2 cursor-pointer hover:underline">Register now</span>
+              className="text-corekColor2 font-semibold cursor-pointer hover:underline">Register now</span>
             </div>
           </div>
         </form>

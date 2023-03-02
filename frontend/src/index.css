@@ -53,3 +53,17 @@
   .rating span {
     color: #002fff;
   }
+
+  .textHover:hover {
+    animation-name: textHover;
+    cursor: pointer;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    transform-origin: bottom;
+    color: #73d9bc;
+}
+@keyframes textHover {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-5px); }
+  100% { transform: translateY(0); } 
+}

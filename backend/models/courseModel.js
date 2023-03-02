@@ -8,7 +8,7 @@ const courseSchema = new mongoose.Schema({
     price: {type: Number, required: true},
     image: {type: String, required: true},
     image2: {type: String, required: true},
-    rating: {type: [Number], required: true},
+    rating: {type: Number, required: true},
     description: {type: String, required: true},
     duration: {type: String, required: true},
     skill_level: {type: String, required: true},

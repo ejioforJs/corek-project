@@ -48,13 +48,14 @@
     gap: 1rem;
 }
 .course-child div{
+    
+}
+.child:hover{
+    animation-name: child;
     cursor: pointer;
     animation-duration: 1s;
     animation-iteration-count: infinite;
     transform-origin: bottom;
-}
-.child:hover{
-    animation-name: child;
     color: white;
 }
 @keyframes child {

@@ -1,7 +1,7 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 import axios from "axios";
 import { getError } from "../utils.js";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AiOutlineRight } from "react-icons/ai";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import teacherImg from "../assets/teacher.jpeg";
@@ -14,6 +14,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Course from "../homeScreenComp/Course";
 import { BsArrowUpRightSquare } from "react-icons/bs";
 import courseHeroimg from "../assets/singleCourseHero.jpg";
+import { Store } from "../Store.js";
+import { toast } from 'react-toastify';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -33,6 +35,7 @@ const reducer = (state, action) => {
 const SingleCourseScreen = () => {
   const params = useParams();
   const { slug } = params;
+  const navigate = useNavigate()
 
   const settings = {
     dots: true,
@@ -76,6 +79,9 @@ const SingleCourseScreen = () => {
     course: [],
     courses: [],
   });
+
+  const {state, dispatch: ctxDispatch} = useContext(Store)
+  const {userInfo, orderItems} = state
 
   useEffect(() => {
     const fetchData = async () => {
@@ -131,16 +137,38 @@ const SingleCourseScreen = () => {
     }
   });
 
-  console.log(latestCourses);
-
-  const initialRating = course.rating.reduce((a, c) => a + c, 0);
-  const averageRating = initialRating / course.rating.length;
-  const rating =
-    averageRating === 0.5 || 1.5 || 2.5 || 3.5 || 4.5
-      ? averageRating
-      : Math.ceil(averageRating);
-  console.log(course.rating[2]);
-  console.log(course.name);
+  const orderHandler = async () => {
+    if(!userInfo) {
+      toast.error("Login to buy a course")
+      return;
+    }
+    const existItem = orderItems.find((x) => x._id === course._id);
+    if (existItem) {
+      toast.error('This course is already in your order list');
+      return;
+    }
+    ctxDispatch({
+      type: 'ORDER_ADD_ITEM',
+      payload: course,
+    });
+      try {
+        const { data } = await axios.post(
+          '/api/orders',
+          {
+            orderItems: orderItems,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
+        navigate(`/order/${data.order._id}`);
+      } catch (err) {
+        toast.error(getError(err));
+      }
+    
+  }
 
   // loading ? (
   //   <LoadingBox />
@@ -207,14 +235,16 @@ const SingleCourseScreen = () => {
               </div>
               <div className="flex flex-col space-y-1 justify-center pl-3 border-l-2 ">
                 <p className="text-xs text-gray-400">Rating</p>
-                <SingleCourseRating rating={rating} />
+                <SingleCourseRating rating={course.rating} />
               </div>
             </div>
             <div className="flex flex-row space-x-3 items-center">
               <p className="text-3xl text-corekColor2 font-semibold">
                 ${course.price}.00
               </p>
-              <button className="px-5 py-2 border border-corekColor1 hover:bg-white duration-500 bg-corekColor1 rounded text-sm font-bold">
+              <button 
+              onClick={orderHandler}
+              className="px-5 py-2 border border-corekColor1 hover:bg-white duration-500 bg-corekColor1 rounded text-sm font-bold">
                 BUY NOW
               </button>
             </div>
