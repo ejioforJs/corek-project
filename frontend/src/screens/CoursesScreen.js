@@ -306,7 +306,7 @@ const CoursesScreen = ({ itemsPerPage }) => {
           alt="hero"
         />
         <div className="absolute z-10 h-full top-0 w-full bg-gradient-to-t opacity-60 from-corekColor3 to-corekColor3"></div>
-        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-5 text-white text-[45px] bottom-24 left-16">
+        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-5 text-white text-[38px] bottom-24 left-16">
           Courses
         </div>
       </div>

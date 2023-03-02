@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useReducer } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import courseHeroimg from "../assets/singleCourseHero.jpg";
 import { Store } from "../Store";
 import { getError } from "../utils";
@@ -50,7 +50,12 @@ const reducer = (state, action) => {
     case "FETCH-REQUEST":
       return { ...state, loading: true, error: "" };
     case "FETCH_SUCCESS":
-      return { ...state, loading: false, ordersList: action.payload, error: "" };
+      return {
+        ...state,
+        loading: false,
+        ordersList: action.payload,
+        error: "",
+      };
     case "FETCH_FAIL":
       return { ...state, loading: false, error: action.payload };
     default:
@@ -59,6 +64,7 @@ const reducer = (state, action) => {
 };
 
 const DashboardScreen = () => {
+  const navigate = useNavigate()
   const [
     { dashboard, orders, shipping, account, loading, error, ordersList },
     dispatch,
@@ -78,17 +84,23 @@ const DashboardScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        dispatch({ type: 'FETCH_REQUEST' });
+        dispatch({ type: "FETCH_REQUEST" });
         const { data } = await axios.get(`/api/orders/mine`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
-        dispatch({ type: 'FETCH_SUCCESS', payload: data });
+        dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
+        dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
     };
     fetchData();
   }, [userInfo]);
+
+  const checkoutHandler = () => {
+    navigate("/checkout")
+  }
+
+  console.log(ordersList);
 
   return (
     <div>
@@ -99,7 +111,7 @@ const DashboardScreen = () => {
           alt="hero"
         />
         <div className="absolute z-10 h-full top-0 w-full bg-gradient-to-t opacity-60 from-corekColor3 to-corekColor3"></div>
-        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-5 text-white text-[45px] bottom-24 left-16">
+        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-5 text-white text-[38px] bottom-24 left-16">
           Welcome {userInfo.username}
         </div>
       </div>
@@ -171,54 +183,52 @@ const DashboardScreen = () => {
               </p>
             </div>
           ) : orders ? (
-            <div
-                >
-                  {ordersList ? (
-                    <div>
-                    <table className="border-collapse w-full">
-                      <thead className="bg-[rgb(230,230,230)]">
-                        <tr>
-                          <th className="border-y-corekColor1 py-2.5 ...">
-                            Order
-                          </th>
-                          <th className="border-y-corekColor1 border-gray-300 ...">
-                            Course
-                          </th>
-                          <th className="border-y-corekColor1 border-gray-300 ...">
-                            Total
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {ordersList.map((course, index) => (
-                          <tr className="text-sm">
-                            <td className="border border-gray-300 text-center p-2">
-                              {index + 1}
-                            </td>
-                            <td className="border text-center border-gray-300 p-2">
-                              {course.orderItems.name}
-                            </td>
-                            <td className="border text-center border-gray-300 p-2">
-                              ${course.orderItems.price}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                    <div className="py-4">
-                    <button 
-                      onClick={() => dispatch({type: 'SHIPPING_SUCCESS'})}
-                      className="bg-main-color float-right text-white text-sm font-bold px-4 rounded py-2 hover:bg-corekColborder-y-corekColor1 duration-500"
-                    >
-                      CHECKOUT
-                    </button>
-                  </div>
-                  </div>
-                  ) : (
-                    <div>There are currently no orders</div>
-                  )}
+            <div>
+           {ordersList ?   (
+              <div>
+                <table className="border-collapse w-full">
+                  <thead className="bg-[rgb(230,230,230)]">
+                    <tr>
+                      <th className="border-y-corekColor1 py-2.5 ...">Order</th>
+                      <th className="border-y-corekColor1 border-gray-300 ...">
+                        Course
+                      </th>
+                      <th className="border-y-corekColor1 border-gray-300 ...">
+                        Total
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {ordersList.map((product) => (
+                      product.orderItems.map((course, index) => (
+                        <tr className="text-sm">
+                        <td className="border border-gray-300 text-center p-2">
+                          {index+1}
+                        </td>
+                        <td className="border text-center border-gray-300 p-2">
+                          {course.name}
+                        </td>
+                        <td className="border text-center border-gray-300 p-2">
+                          ${course.price}
+                        </td>
+                      </tr>
+                      ))
+                    ))}
+                  </tbody>
+                </table>
+                <div className="py-4">
+                  <button
+                    onClick={checkoutHandler}
+                    className="bg-corekColor1 float-right text-black border-2 border-corekColor1 text-sm font-bold px-4 rounded py-2 hover:bg-white duration-500"
+                  >
+                    CHECKOUT
+                  </button>
                 </div>
-          ): (
+              </div>
+              ) : (<div>There are currently no orders</div>
+              )}
+            </div>
+          ) : (
             <div></div>
           )}
         </div>

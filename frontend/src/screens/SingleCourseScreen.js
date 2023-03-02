@@ -81,7 +81,7 @@ const SingleCourseScreen = () => {
   });
 
   const {state, dispatch: ctxDispatch} = useContext(Store)
-  const {userInfo, orderItems} = state
+  const {userInfo,cart, cart: {cartItems}} = state
 
   useEffect(() => {
     const fetchData = async () => {
@@ -142,32 +142,17 @@ const SingleCourseScreen = () => {
       toast.error("Login to buy a course")
       return;
     }
-    const existItem = orderItems.find((x) => x._id === course._id);
+    const existItem = cartItems.find((x) => x._id === course._id);
     if (existItem) {
-      toast.error('This course is already in your order list');
+      toast.error('This course is already in your cart');
       return;
     }
     ctxDispatch({
-      type: 'ORDER_ADD_ITEM',
+      type: 'CART_ADD_ITEM',
       payload: course,
     });
-      try {
-        const { data } = await axios.post(
-          '/api/orders',
-          {
-            orderItems: orderItems,
-          },
-          {
-            headers: {
-              authorization: `Bearer ${userInfo.token}`,
-            },
-          }
-        );
-        navigate(`/order/${data.order._id}`);
-      } catch (err) {
-        toast.error(getError(err));
-      }
-    
+    navigate("/placeorder");
+    console.log(cartItems)
   }
 
   // loading ? (
@@ -186,7 +171,7 @@ const SingleCourseScreen = () => {
           alt="hero"
         />
         <div className="absolute z-10 h-full top-0 w-full bg-gradient-to-t opacity-60 from-corekColor3 to-corekColor3"></div>
-        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-5 text-white text-[45px] bottom-24 left-16">
+        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-5 text-white text-[38px] bottom-24 left-16">
           {course.category}
         </div>
       </div>
@@ -214,7 +199,7 @@ const SingleCourseScreen = () => {
         </div>
       </div>
       <div className="flex flex-row px-16 mt-20 space-x-7">
-        <div className="basis-[75%] h-40">
+        <div className="basis-3/4 h-40">
           <h1 className="text-3xl font-bold">{course.name}</h1>
           <div className="flex flex-row mt-10 w-full justify-between">
             <div className="flex flex-row space-x-4">
@@ -250,7 +235,7 @@ const SingleCourseScreen = () => {
             </div>
           </div>
           <img
-            className="mt-10 rounded h-[550px] w-full"
+            className="mt-10 rounded w-full h-96"
             src={course.image2}
             alt="courseImg"
           />
@@ -282,8 +267,9 @@ const SingleCourseScreen = () => {
               ))}
             </Slider>
           </div>
+          <div className="mt-16 text-white"> i am the best</div>
         </div>
-        <div className="basis-[25%]">
+        <div className="basis-1/4">
           <div className="border-l pl-4">
             <p className="font-semibold pl-4 text-lg -ml-5 pb-4 border-l-4 border-corekColor1">
               ALL COURSES
