@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import freeImage from "../assets/free.png";
 import { FcCheckmark } from "react-icons/fc";
-import cardBg from '../assets/cardBg.png'
-import courses from '../assets/courses.png'
-import community from '../assets/community.png'
+import cardBg from "../assets/cardBg.png";
+import courses from "../assets/courses.png";
+import community from "../assets/community.png";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { toast } from 'react-toastify';
 
 const CardComponents = () => {
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
+  const notAvailable = () => {
+    toast.warning("Functionality not available yet")
+  }
   return (
-    <div className="w-full px-16 flex flex-col md:flex-row justify-between">
-      <div className="bg-white -mt-20 z-30 relative flex flex-col space-y-8 px-7 pt-5 pb-11 rounded-md shadow-md basis-[31%]">
+    <div className="w-full px-4 md:px-16 flex flex-col md:flex-row justify-between">
+      <div
+        data-aos="fade-right"
+        data-aos-duration="1000"
+        className="bg-white -mt-12 md:-mt-20 border z-30 relative flex flex-col space-y-8 px-7 pt-5 pb-11 rounded-md shadow-md basis-[31%]"
+      >
         <img className="absolute top-0 right-0" src={cardBg} alt="" />
         <img className="w-16 h-16" src={freeImage} alt="" />
         <p className="text-lg font-semibold">Free Updates</p>
@@ -32,9 +46,17 @@ const CardComponents = () => {
             <p className="text-gray-600">Become a better trader.</p>
           </div>
         </div>
-        <button className="border text-black rounded-md border-corekColor1 py-3 px-3 hover:bg-corekColor1 hover:text-black duration-500">SUBSCRIBE FOR FREE</button>
+        <button 
+        onClick={notAvailable}
+        className="border text-black rounded-md border-corekColor1 py-3 px-3 hover:bg-corekColor1 hover:text-black duration-500">
+          SUBSCRIBE FOR FREE
+        </button>
       </div>
-      <div className="bg-white -mt-20 z-30 relative flex flex-col space-y-8 px-7 py-5 rounded-md shadow-md basis-[31%]">
+      <div
+        data-aos="fade-up"
+        data-aos-duration="1000"
+        className="bg-white border mt-8 md:-mt-20 z-30 relative flex flex-col space-y-8 px-7 py-5 rounded-md shadow-md basis-[31%]"
+      >
         <img className="absolute top-0 right-0" src={cardBg} alt="" />
         <img className="w-16 h-16" src={courses} alt="" />
         <p className="text-lg font-semibold">Courses</p>
@@ -58,9 +80,15 @@ const CardComponents = () => {
             <p className="text-gray-600">Taught by professional traders.</p>
           </div>
         </div>
-        <button className="border text-black rounded-md border-corekColor1 py-3 px-3 hover:bg-corekColor1 hover:text-black duration-500">EXPLORE COURSES</button>
+        <button className="border text-black rounded-md border-corekColor1 py-3 px-3 hover:bg-corekColor1 hover:text-black duration-500">
+          EXPLORE COURSES
+        </button>
       </div>
-      <div className="bg-white -mt-20 z-30 relative flex flex-col space-y-8 px-7 py-5 rounded-md shadow-md basis-[31%]">
+      <div
+        data-aos="fade-left"
+        data-aos-duration="1000"
+        className="bg-white border mt-8 md:-mt-20 z-30 relative flex flex-col space-y-8 px-7 py-5 rounded-md shadow-md basis-[31%]"
+      >
         <img className="absolute top-0 right-0" src={cardBg} alt="" />
         <img className="w-16 h-16" src={community} alt="" />
         <p className="text-lg font-semibold">Community</p>
@@ -84,7 +112,11 @@ const CardComponents = () => {
             <p className="text-gray-600">View daily market scans.</p>
           </div>
         </div>
-        <button className="border text-black rounded-md border-corekColor1 py-3 px-3 hover:bg-corekColor1 hover:text-black duration-500">PREMIUM SUBSCRIPTIONS</button>
+        <button 
+        onClick={notAvailable}
+        className="border text-black rounded-md border-corekColor1 py-3 px-3 hover:bg-corekColor1 hover:text-black duration-500">
+          PREMIUM SUBSCRIPTIONS
+        </button>
       </div>
     </div>
   );

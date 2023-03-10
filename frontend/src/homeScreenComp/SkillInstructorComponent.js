@@ -1,23 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import instructor from "../assets/instructor.png";
 import user from "../assets/user.png";
 import { FaFacebookF, FaTwitter, FaYoutube} from "react-icons/fa";
 import {AiFillInstagram} from 'react-icons/ai'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const SkillInstructorComponent = () => {
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   return (
-    <div className="mt-16 px-16">
-      <div className="text-center">
+    <div className="mt-16 px-4 md:px-16">
+      <div
+      data-aos="fade-up"
+      data-aos-duration="1000"
+      className="text-center">
         <p className="text-2xl font-semibold mb-2">Our Skill Instructor</p>
         <p className="text-sm text-gray-700">
           Get to converse with our skill instructor via his social media handles
         </p>
       </div>
       <div className="mt-8 flex flex-col space-y-2 items-center justify-center">
-        <div className="w-full flex flex-row items-center justify-between">
-          <img className="rounded-full h-52 w-52" src={user} alt="user" />
-          <img className="rounded-full h-52 w-52" src={user} alt="user" />
-          <div className="group relative h-64 w-64">
+        <div className="w-full flex flex-col md:flex-row items-center justify-between">
+          <img 
+          data-aos="fade-right"
+          data-aos-duration="1000"
+          className="rounded-full hidden md:block h-52 w-52" src={user} alt="user" />
+          <img 
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          className="rounded-full hidden md:block h-52 w-52" src={user} alt="user" />
+          <div 
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          className="group relative h-64 w-64">
             <img
               className="rounded-full w-full h-full"
               src={instructor}
@@ -31,10 +49,19 @@ const SkillInstructorComponent = () => {
                 <span className="text-xl cursor-pointer hover:text-corekColor1 duration-500"><FaYoutube /></span>
               </div>
           </div>
-          <img className="rounded-full h-52 w-52" src={user} alt="user" />
-          <img className="rounded-full h-52 w-52" src={user} alt="user" />
+          <img 
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          className="rounded-full hidden md:block h-52 w-52" src={user} alt="user" />
+          <img 
+          data-aos="fade-left"
+          data-aos-duration="1000"
+          className="rounded-full hidden md:block h-52 w-52" src={user} alt="user" />
         </div>
-        <div className="flex flex-col items-center">
+        <div 
+        data-aos="fade-up"
+        data-aos-duration="1000"
+        className="flex flex-col items-center">
           <p className="text-lg font-semibold">Stevan kate</p>
           <p className="text-gray-700 text-sm">Creative Director</p>
         </div>

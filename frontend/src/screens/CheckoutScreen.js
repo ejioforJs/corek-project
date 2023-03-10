@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useContext, useEffect, useReducer } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import courseHeroimg from "../assets/singleCourseHero.jpg";
 import stripeimg from "../assets/Stripe.png";
+import LoadingBox from "../components/LoadingBox";
 import { Store } from "../Store";
 import { getError } from "../utils";
 
@@ -32,7 +33,7 @@ const CheckoutScreen = () => {
   });
   const navigate = useNavigate()
 
-  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { state } = useContext(Store);
   const { userInfo } = state;
 
   const checkoutHandler = () => {
@@ -53,7 +54,12 @@ const CheckoutScreen = () => {
     };
     fetchData();
   }, [userInfo]);
-  return (
+  return loading ? (
+    <LoadingBox />
+  ): error ? (
+    <div>{error}</div>
+  ):
+  (
     <div>
       <div className="relative">
         <img
@@ -62,16 +68,27 @@ const CheckoutScreen = () => {
           alt="hero"
         />
         <div className="absolute z-10 h-full top-0 w-full bg-gradient-to-t opacity-60 from-corekColor3 to-corekColor3"></div>
-        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-5 text-white text-[38px] bottom-24 left-16">
+        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-4 md:pl-5 text-white text-2xl md:text-[38px] bottom-24 md:left-16">
           CHECKOUT
         </div>
       </div>
-      <div className="mt-12 px-16">
+      <div className="ml-4 md:ml-16 mt-4 flex flex-row items-center space-x-1.5 text-xs">
+        <div className="flex flex-row items-center space-x-2">
+          You are logged in as
+        </div>
+        <Link to="/dashboardscreen">
+          <div className="flex flex-row items-center space-x-2 text-corekColor1">
+            <span>{userInfo.username}</span>
+            <span>{">"}</span>
+          </div>
+        </Link>
+      </div>
+      <div className="mt-8 md:mt-12 px-4 md:px-16">
         <div className="text-2xl font-bold text-black">COURSES ORDERED</div>
         <table className="border-collapse w-full mt-8">
           <thead className="bg-[rgb(230,230,230)]">
             <tr>
-              <th className="border-y-corekColor1 text-start pl-8 py-2 border-gray-300">
+              <th className="border-y-corekColor1 text-start pl-2 md:pl-8 py-2 border-gray-300">
                 Course
               </th>
               <th className="border-y-corekColor1 border-gray-300">Price</th>
@@ -82,7 +99,7 @@ const CheckoutScreen = () => {
               order.orderItems.map((product) => (
                 <tr className="text-sm">
                   <td className="py-3">
-                    <div className="flex flex-row items-center space-x-8">
+                    <div className="flex flex-row items-center space-x-2 md:space-x-8">
                       <img
                         className="w-20 h-16 rounded-md"
                         src={product.image}
@@ -113,15 +130,15 @@ const CheckoutScreen = () => {
           </tbody>
         </table>
       </div>
-      <div className="mt-12 px-16">
+      <div className="mt-8 md:mt-12 px-4 md:px-16">
         <div className="text-xl font-bold text-black">PAYMENT</div>
-        <div className="mt-8 bg-[rgb(220,220,220)]">
+        <div className="mt-5 bg-[rgb(220,220,220)]">
           <img className="w-20 h-12" src={stripeimg} alt="stripe" />
         </div>
         <button
           onClick={checkoutHandler}
           disabled={orders.length === 0}
-          className="bg-corekColor1 border-2 border-corekColor1 text-sm px-7 py-3 mt-5 font-semibold rounded hover:bg-white duration-300"
+          className="bg-corekColor1 border-2 border-corekColor1 text-sm px-7 py-3 mt-8 font-semibold rounded hover:bg-white duration-300"
         >
           CHECKOUT
         </button>

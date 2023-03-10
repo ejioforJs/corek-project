@@ -8,6 +8,11 @@ import AccessHash from "../models/accessHashModel.js";
 
 const userRouter = express.Router()
 
+userRouter.get("/", async(req, res) => {
+  const users = await User.find()
+  res.send(users)
+})
+
 userRouter.post(
     '/login',
     expressAsyncHandler(async (req, res) => {
@@ -108,6 +113,11 @@ userRouter.post(
     } catch (error) {
       return res.status(422).send("Ooooops, Something went wrong")
     }
+  })
+
+  userRouter.post('/removeUser', async(req,res) => {
+    const id = req.body.id
+    await User.deleteOne({_id: id})
   })
 
   export default userRouter

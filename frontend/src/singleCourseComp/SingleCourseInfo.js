@@ -1,15 +1,13 @@
 import React, { useReducer } from "react";
 import {
   FaBookmark,
-  FaCube,
   FaUserAlt,
-  FaComments,
   FaRegClock,
   FaLevelUpAlt,
   FaLanguage,
 } from "react-icons/fa";
-import instructorImg from "../assets/instructorImg2.jpeg";
-import SingleCourseRating from "./SingleCourseRating";
+// import instructorImg from "../assets/instructorImg2.jpeg";
+// import SingleCourseRating from "./SingleCourseRating";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -45,7 +43,7 @@ const SingleCourseInfo = (props) => {
     //   ? averageRating
     //   : Math.ceil(averageRating); 
 
-    const rating = course.review
+    // const rating = course.review
 
   return (
     <div className="border w-full mt-10">
@@ -74,14 +72,14 @@ const SingleCourseInfo = (props) => {
         </div>
       </div>
       {topicOverview ? (
-        <div className="px-5 py-8 flex flex-row justify-between">
+        <div className="px-5 py-8 flex flex-col space-y-5 md:flex-row justify-between">
           <div className="basis-[55%]">
             <p className="font-semibold text-lg">COURSE DESCRIPTION</p>
             <p className="text-sm mt-4 leading-7">
               {course.description}
             </p>
           </div>
-          <div className="pl-6 border-l-2 basis-[40%]">
+          <div className="md:pl-6 md:border-l-2 basis-[40%]">
             <p className="font-semibold text-lg">COURSE FEATURES</p>
             <div className="flex flex-col text-sm mt-4">
               <div className="flex flex-row justify-between pb-4 border-b border-corekColor1">
@@ -116,9 +114,9 @@ const SingleCourseInfo = (props) => {
         </div>
       ) : topicInstructor ? (
         <div className="px-5 py-8">
-          <div className="px-5 py-8 flex flex-row space-x-8 items-start border">
+          <div className="px-5 py-8 flex flex-col space-y-5 md:flex-row md:space-x-8 items-center md:items-start border">
             <img className="rounded-full" src={course.instructorImg2} alt="" />
-            <div>
+            <div className="text-center">
               <p className="text-sm font-semibold">{course.author}</p>
               <p className="text-xs text-gray-500 mt-1">{course.aka}</p>
               <p className="text-sm mt-4 leading-7">

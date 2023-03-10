@@ -3,17 +3,18 @@ import React, { useContext, useEffect, useReducer } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import courseHeroimg from "../assets/singleCourseHero.jpg";
+import LoadingBox from "../components/LoadingBox";
 import { Store } from "../Store";
 import { getError } from "../utils";
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'CREATE_REQUEST':
-      return { ...state, loading: true };
+      return { ...state, loading: true, error: false };
     case 'CREATE_SUCCESS':
-      return { ...state, loading: false };
+      return { ...state, loading: false, error: false };
     case 'CREATE_FAIL':
-      return { ...state, loading: false };
+      return { ...state, loading: false, error: true };
     default:
       return state;
   }
@@ -21,8 +22,9 @@ const reducer = (state, action) => {
 
 const OrderScreen = () => {
   const navigate = useNavigate();
-  const [{ loading }, dispatch] = useReducer(reducer, {
+  const [{ loading, error }, dispatch] = useReducer(reducer, {
     loading: false,
+    error: false
   });
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -40,7 +42,7 @@ const OrderScreen = () => {
   const placeOrderHandler = async () => {
     try {
       dispatch({ type: 'CREATE_REQUEST' });
-      const { data } = await axios.post(
+      await axios.post(
         '/api/orders',
         {
           orderItems: cartItems,
@@ -61,7 +63,12 @@ const OrderScreen = () => {
     }
   };
 
-  return (
+  return loading ? (
+    <LoadingBox />
+  ): error ? (
+    <div>{error}</div>
+  ): 
+  (
     <div>
       <div className="relative">
         <img
@@ -70,11 +77,11 @@ const OrderScreen = () => {
           alt="hero"
         />
         <div className="absolute z-10 h-full top-0 w-full bg-gradient-to-t opacity-60 from-corekColor3 to-corekColor3"></div>
-        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-5 text-white text-[38px] bottom-24 left-16">
+        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-4 md:pl-5 text-white text-2xl md:text-[38px] bottom-24 md:left-16">
           PLACE ORDER HERE
         </div>
       </div>
-      <div className="ml-16 mt-4 flex flex-row items-center space-x-1.5 text-xs">
+      <div className="ml-4 md:ml-16 mt-4 flex flex-row items-center space-x-1.5 text-xs">
         <div className="flex flex-row items-center space-x-2">
           You are logged in as
         </div>
@@ -85,12 +92,12 @@ const OrderScreen = () => {
           </div>
         </Link>
       </div>
-      <div className="mt-12 px-16">
+      <div className="mt-8 px-4 md:px-16">
         <div className="text-2xl font-bold text-black">COURSES SELECTED</div>
         <table className="border-collapse w-full mt-8">
           <thead className="bg-[rgb(230,230,230)]">
             <tr>
-              <th className="border-y-corekColor1 text-start pl-8 py-2 border-gray-300">
+              <th className="border-y-corekColor1 text-start pl-2 md:pl-8 py-2 border-gray-300">
                 Course
               </th>
               <th className="border-y-corekColor1 border-gray-300">
@@ -102,7 +109,7 @@ const OrderScreen = () => {
           {cartItems.map((product, index) => (
             <tr className="text-sm">
               <td className="py-3">
-                <div className="flex flex-row items-center space-x-8">
+                <div className="flex flex-row items-center space-x-2 md:space-x-8">
                   <img className="w-20 h-16 rounded-md" src={product.image} alt={product.name} />
                   <p className="font-semibold">{product.name}</p>
                 </div>
@@ -117,7 +124,7 @@ const OrderScreen = () => {
           </tbody>
         </table>
       </div>
-      <div className="mt-12 px-16">
+      <div className="mt-8 px-4 md:px-16">
         <button
         onClick={placeOrderHandler}
         disabled={cartItems.length === 0}

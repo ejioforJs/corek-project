@@ -5,11 +5,12 @@ import { FaAngleDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import courseHeroimg from "../assets/singleCourseHero.jpg";
 import ShopCourse from "../components/ShopCourse";
-import Course from "../homeScreenComp/Course";
+// import Course from "../homeScreenComp/Course";
 import { Store } from "../Store";
 import { GiNextButton, GiPreviousButton } from "react-icons/gi";
 import ReactPaginate from "react-paginate";
 import { BsArrowUpRightSquare } from "react-icons/bs";
+import LoadingBox from "../components/LoadingBox";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -297,7 +298,12 @@ const CoursesScreen = ({ itemsPerPage }) => {
     setItemOffset(newOffset);
   };
 
-  return (
+  return loading ? (
+    <LoadingBox />
+  ): error ? (
+    <div>{error}</div>
+  ):
+    (
     <div>
       <div className="relative">
         <img
@@ -306,31 +312,33 @@ const CoursesScreen = ({ itemsPerPage }) => {
           alt="hero"
         />
         <div className="absolute z-10 h-full top-0 w-full bg-gradient-to-t opacity-60 from-corekColor3 to-corekColor3"></div>
-        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-5 text-white text-[38px] bottom-24 left-16">
+        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-4 md:pl-5 text-white text-2xl md:text-[38px] bottom-24 md:left-16">
           Courses
         </div>
       </div>
-      <div className="ml-16 mt-4 flex flex-row items-center space-x-3 text-xs">
+      <div className="ml-4 md:ml-16 mt-4 flex flex-row items-center space-x-3 text-xs">
         <Link to="/">
           <div className="flex flex-row items-center space-x-2 duration-300 hover:text-corekColor1">
             <span>Home</span>
             <span>{">"}</span>
           </div>
         </Link>
-        {/* <Link to="/courses"> */}
         <div className="flex flex-row items-center space-x-2 duration-300">
           <span>Courses</span>
           <span>{">"}</span>
         </div>
-        {/* </Link> */}
-        {/* <Link to="/">
+        <Link to="/">
           <div className="flex flex-row items-center space-x-2 duration-300  hover:text-corekColor1">
-            <span>{course.category}</span>
-            <span>{">"}</span>
+            {
+              forex || addSearch === "forex" ? (<span>Forex</span>) : cryptocurrency || addSearch === "cryptocurrency" ? (<span>Cryptocurrency</span>): 
+              stock_trading || addSearch === "stock trading" ? (<span>Stock Trading</span>) :
+              digital_marketing || addSearch === "digital marketing" ? (<span>Digital Marketing</span>) : 
+              (<span></span>)
+            }
           </div>
-        </Link> */}
+        </Link>
       </div>
-      <div className="flex sm:flex-row flex-col px-16 mt-20 space-x-7">
+      <div className="flex md:flex-row flex-col px-4 md:px-16 mt-16 md:space-x-7">
         <div className="basis-[75%]">
           <div className="mb-6 flex flex-col gap-y-5 sm:flex-row w-full justify-between items-center">
             <p className="flex flex-row gap-2 items-center text-gray-500">
@@ -435,7 +443,7 @@ const CoursesScreen = ({ itemsPerPage }) => {
             </div>
           </div>
           {/* <ul className="flex flex-wrap space-y-4 items-center justify-between mt-8 mb-10"> */}
-          <ul className="grid grid-cols-3 gap-6 mt-8 mb-10">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-8 mb-10">
             {currentCourses.map((course) => (
               <li key={course._id} className="">
                 <ShopCourse course={course} />
@@ -470,9 +478,9 @@ const CoursesScreen = ({ itemsPerPage }) => {
             activeClassName={"bg-corekColor1 text-white"}
           />
         </div>
-        <div className="basis-[25%]">
-          <div className="border-l pl-4">
-            <p className="font-semibold pl-4 text-lg -ml-5 pb-4 border-l-4 border-corekColor1">
+        <div className="basis-[25%] w-full mt-16">
+          <div className="md:border-l md:pl-4">
+            <p className="font-semibold -ml-4 pl-4 text-lg md:-ml-5 pb-4 border-l-4 border-corekColor1">
               CATEGORIES
             </p>
             <div className="flex flex-col space-y-3 text-sm">
@@ -483,7 +491,7 @@ const CoursesScreen = ({ itemsPerPage }) => {
                 }}
                 className={`${
                   all ? "text-corekColor1" : ""
-                } cursor-pointer hover:text-corekColor1 duration-300`}
+                } cursor-pointer textHover`}
               >
                 All
               </p>
@@ -493,8 +501,8 @@ const CoursesScreen = ({ itemsPerPage }) => {
                 dispatch({ type: "FOREX_SUCCESS" });
               }}
               className={`${
-                forex ? "text-corekColor1" : ""
-              } cursor-pointer hover:text-corekColor1 duration-300`}
+                forex || addSearch==="forex" ? "text-corekColor1" : ""
+              } cursor-pointer textHover`}
               >
                 Forex
               </p>
@@ -504,8 +512,8 @@ const CoursesScreen = ({ itemsPerPage }) => {
                 dispatch({ type: "CRYPTOCURRENCY_SUCCESS" });
               }}
               className={`${
-                cryptocurrency ? "text-corekColor1" : ""
-              } cursor-pointer hover:text-corekColor1 duration-300`}
+                cryptocurrency || addSearch==="cryptocurrency" ? "text-corekColor1" : ""
+              } cursor-pointer textHover`}
               >
                 Cryptocurrency
               </p>
@@ -515,8 +523,8 @@ const CoursesScreen = ({ itemsPerPage }) => {
                 dispatch({ type: "STOCK_TRADING_SUCCESS" });
               }}
               className={`${
-                stock_trading ? "text-corekColor1" : ""
-              } cursor-pointer hover:text-corekColor1 duration-300`}
+                stock_trading || addSearch==="stock trading" ? "text-corekColor1" : ""
+              } cursor-pointer textHover`}
               >
                 Stock Trading
               </p>
@@ -526,8 +534,8 @@ const CoursesScreen = ({ itemsPerPage }) => {
                 dispatch({ type: "DIGITAL_MARKETING_SUCCESS" });
               }}
               className={`${
-                digital_marketing ? "text-corekColor1" : ""
-              } cursor-pointer hover:text-corekColor1 duration-300`}
+                digital_marketing || addSearch==="digital marketing" ? "text-corekColor1" : ""
+              } cursor-pointer textHover`}
               >
                 Digital Marketing
               </p>

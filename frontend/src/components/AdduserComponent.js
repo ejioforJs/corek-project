@@ -1,19 +1,16 @@
-import axios from "axios";
-import React, { useContext, useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import React, { useState } from 'react'
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { Store } from '../Store.js';
-import { getError } from '../utils.js';
+// import { Store } from '../Store';
+import { getError } from '../utils';
 
-const Signup = ({ setSidelogin, sidesignup, setSidesignup }) => {
-  const navigate = useNavigate()
-  const [username, setUsername] = useState("");
+const AdduserComponent = () => {
+    const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const {dispatch: ctxDispatch} = useContext(Store)
+  // const {dispatch: ctxDispatch} = useContext(Store)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
@@ -24,47 +21,28 @@ const Signup = ({ setSidelogin, sidesignup, setSidesignup }) => {
     return;
   }
   try {
-      const { data } = await axios.post('/api/users/signup', {
+      await axios.post('/api/users/signup', {
         username,
         email,
         password,
       });
-      ctxDispatch({ type: 'USER_SIGNIN', payload: data });
-      localStorage.setItem('userInfo', JSON.stringify(data));
-      setSidesignup(false)
-      toast.success("Sign up successfully")
+      toast.success("User added successfully")
       setUsername("")
       setEmail("")
       setPassword("")
       setConfirmPassword("")
       setShowPassword(false)
       setShowConfirmPassword(false)
-      navigate('/dashboardscreen');
     } catch (err) {
       toast.error(getError(err));
     }
   };
+
   return (
-    <div
-      className={`fixed flex items-center justify-center ${
-        sidesignup ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
-      } inset-0 bg-black duration-500 z-50 bg-opacity-60 overflow-y-auto h-full w-full`}
-    >
-      <div
-        onClick={() => {
-          setSidesignup(false);
-          setSidelogin(false);
-        }}
-        className="absolute text-2xl font-bold text-white cursor-pointer nav-hover top-10 right-8"
-      >
-        <AiOutlineClose className="font-bold" />
-      </div>
-      <div className="w-full md:w-1/3 bg-white py-7 px-4 md:px-10 text-gray-500 text-center">
-        <p className="text-black text-xl font-semibold">
-          Register a new account
-        </p>
-        <form className="text-gray-500" onSubmit={signupSubmitHandler}>
-          <div className="text-sm py-2 mt-5">
+    <div>
+      <p className="text-black text-xl font-semibold">Add a user</p>
+      <form className="text-gray-500" onSubmit={signupSubmitHandler}>
+          <div className="text-sm py-2 mt-4">
             <input
               required
               value={username}
@@ -131,27 +109,14 @@ const Signup = ({ setSidelogin, sidesignup, setSidesignup }) => {
           <div className="py-5">
             <button
               type="submit"
-              className="w-full text-black border border-corekColor1 hover:bg-white bg-corekColor1 text-sm font-bold px-4 rounded py-2 duration-500 mb-2"
+              className="text-black border border-corekColor1 hover:bg-white bg-corekColor1 text-sm font-bold px-4 rounded py-2 duration-500 mb-2"
             >
-              SIGN UP
+              SUBMIT
             </button>
-            <div className="text-sm">
-              Are you a member?{" "}
-              <span
-                onClick={() => {
-                  setSidesignup(false);
-                  setSidelogin(true);
-                }}
-                className="text-corekColor2 font-semibold cursor-pointer hover:underline"
-              >
-                Login now
-              </span>
-            </div>
           </div>
         </form>
-      </div>
     </div>
-  );
-};
+  )
+}
 
-export default Signup;
+export default AdduserComponent

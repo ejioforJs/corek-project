@@ -5,6 +5,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Course from "./Course";
 import {AiOutlineRight} from 'react-icons/ai'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { Link } from "react-router-dom";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -26,8 +29,12 @@ const TopCoursesComponent = () => {
     courses: [],
   });
 
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 1500,
     slidesToShow: 4,
@@ -75,8 +82,11 @@ const TopCoursesComponent = () => {
     fetchData();
   }, []);
   return (
-    <div className="mt-16 px-16">
-      <div className="text-center">
+    <div className="mt-16 px-4 md:px-16">
+      <div 
+      data-aos="fade-up"
+      data-aos-duration="1000"
+      className="text-center">
         <p className="text-2xl font-semibold mb-2">Browse Our Top Courses</p>
         <p className="text-sm text-gray-500">
           Learn Blockchain - Blockchain Courses and Training - Success starts
@@ -89,7 +99,7 @@ const TopCoursesComponent = () => {
         ) : error ? (
           <div>{error}</div>
         ) : (
-          <Slider className="flex flex-row space-x-2 mt-10" {...settings}>
+          <Slider className="flex flex-row space-x-2 mt-8" {...settings}>
             {courses.map((course) => (
               <div key={course.image}>
                 <Course course={course}></Course>
@@ -98,10 +108,13 @@ const TopCoursesComponent = () => {
           </Slider>
         )}
       </div>
-      <div className="justify-center flex mt-16">
-        <button className="flex flex-row border border-corekColor1 hover:bg-white duration-500 space-x-3 items-center text-black py-3 px-7 rounded-md bg-corekColor1">
+      <div 
+      data-aos="fade-up"
+      data-aos-duration="1000"
+      className="justify-center flex mt-8">
+        <Link to="/courses" className="flex flex-row border border-corekColor1 hover:bg-white duration-500 space-x-3 items-center text-black py-3 px-7 rounded-md bg-corekColor1">
           <span className="text-sm">VIEW ALL COURSES</span> <span className="font-extrabold text-sm"><AiOutlineRight /></span>
-        </button>
+        </Link>
       </div>
     </div>
   );

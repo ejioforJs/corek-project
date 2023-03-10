@@ -1,11 +1,12 @@
 import React from "react";
 import { BsArrowUpRightSquare } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import SingleCourseRating from "../singleCourseComp/SingleCourseRating";
 
 const Course = (props) => {
   const { course } = props;
   return (
-    <div className="flex flex-col space-y-2 p-3">
+    <div className="flex flex-col space-y-2 md:p-3">
       <Link to={`/course/${course.slug}`}>
         <div className="group relative">
           <img
@@ -29,9 +30,10 @@ const Course = (props) => {
       </Link>
       <div className="flex flex-row items-center justify-between">
         <p className="font-semibold text-corekColor2">${course.price}.00</p>
-        <div className="border px-4 py-1 cursor-pointer rounded border-corekColor1 bg-corekColor1 hover:bg-white duration-500">
+        {/* <div className="border px-4 py-1 cursor-pointer rounded border-corekColor1 bg-corekColor1 hover:bg-white duration-500">
           Buy
-        </div>
+        </div> */}
+        <SingleCourseRating rating={course.rating} />
       </div>
     </div>
   );

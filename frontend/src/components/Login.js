@@ -3,7 +3,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { toast } from 'react-toastify';
 import { Store } from '../Store.js';
 import { getError } from '../utils.js';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -13,8 +13,8 @@ const Login = ({ sidelogin, setSidelogin, setSidesignup, setSideforgotpassword }
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
 
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const {userInfo} = state
+  const { dispatch: ctxDispatch } = useContext(Store);
+  // const {userInfo} = state
 
   const loginSubmitHandler = async (e) => {
     e.preventDefault()
@@ -52,7 +52,7 @@ const Login = ({ sidelogin, setSidelogin, setSidesignup, setSideforgotpassword }
       >
         <AiOutlineClose className="font-bold" />
       </div>
-      <div className="w-1/3 bg-white px-10 py-7 text-gray-500 text-center">
+      <div className="w-full md:w-1/3 bg-white px-4 md:px-10 py-7 text-gray-500 text-center">
         <p className="text-black text-xl font-semibold">
           Login with your site account
         </p>

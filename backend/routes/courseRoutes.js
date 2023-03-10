@@ -18,4 +18,13 @@ courseRouter.get('/slug/:slug', async(req,res) => {
     }
 })
 
+courseRouter.post('/addCourse', async(req,res) => {
+
+})
+
+courseRouter.post('/removeCourse', async(req,res) => {
+    const id = req.body.id
+    await Course.deleteOne({_id: id})
+})
+
 export default courseRouter

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
-import { GoSearch } from "react-icons/go";
 import { Link, useLocation, useParams } from "react-router-dom";
 import image from "../assets/corek.png";
 import { Store } from "../Store";
@@ -9,6 +8,13 @@ import Login from "./Login";
 import ResetPassword from "./ResetPassword";
 import Signup from "./Signup";
 import { IoIosArrowDown } from "react-icons/io";
+import { GiHamburgerMenu } from "react-icons/gi";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaTwitter,
+} from "react-icons/fa";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -19,6 +25,7 @@ const reducer = (state, action) => {
         courses: false,
         aboutus: false,
         contactus: false,
+        faq: false
       };
     case "COURSES_SUCCESS":
       return {
@@ -27,6 +34,7 @@ const reducer = (state, action) => {
         courses: true,
         aboutus: false,
         contactus: false,
+        faq: false
       };
     case "ABOUTUS_SUCCESS":
       return {
@@ -35,6 +43,7 @@ const reducer = (state, action) => {
         courses: false,
         aboutus: true,
         contactus: false,
+        faq: false
       };
     case "CONTACTUS_SUCCESS":
       return {
@@ -43,6 +52,16 @@ const reducer = (state, action) => {
         courses: false,
         aboutus: false,
         contactus: true,
+        faq: false
+      };
+      case "FAQ_SUCCESS":
+      return {
+        ...state,
+        home: false,
+        courses: false,
+        aboutus: false,
+        contactus: false,
+        faq: true
       };
     case "CASES_FALSE":
       return {
@@ -58,23 +77,25 @@ const reducer = (state, action) => {
 };
 
 export default function Navbar() {
-  const [{ home, courses, aboutus, contactus }, dispatch] = useReducer(
+  const [{ home, courses, aboutus, contactus, faq }, dispatch] = useReducer(
     reducer,
     {
       home: true,
       courses: false,
       aboutus: false,
       contactus: false,
+      faq: false
     }
   );
   const [accountdropdown, setAccountdropdown] = useState(false);
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { addSearch, userInfo } = state;
+  const { userInfo } = state;
 
   const [sidesearch, setSidesearch] = useState(false);
   const [sidelogin, setSidelogin] = useState(false);
   const [sidesignup, setSidesignup] = useState(false);
+  const [sidenav, setSidenav] = useState(false);
   const [sideforgotpassword, setSideforgotpassword] = useState(false);
   const [sideresetpassword, setSideresetpassword] = useState(false);
   const [search, setSearch] = useState("");
@@ -115,7 +136,7 @@ export default function Navbar() {
   console.log(location.pathname);
 
   return (
-    <nav className="bg-transparent z-40 border-gray-200 px-2 sm:px-16 py-6 dark:bg-gray-900">
+    <nav className="bg-transparent z-40 border-gray-200 px-4 sm:px-16 py-3 md:py-6 dark:bg-gray-900">
       <Login
         sidelogin={sidelogin}
         setSidelogin={setSidelogin}
@@ -184,32 +205,14 @@ export default function Navbar() {
       </div>
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <div className="flex items-center">
-          <img src={image} className="h-6 mr-3 sm:h-10 z-40" alt="Corek Logo" />
+          <img
+            src={image}
+            className="h-6 w-16 md:w-28 mr-3 sm:h-10 z-40"
+            alt="Corek Logo"
+          />
         </div>
-        <button
-          data-collapse-toggle="navbar-default"
-          type="button"
-          className="inline-flex items-center p-2 ml-3 text-sm text-white rounded-lg md:hidden bg-transparent z-40 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          aria-controls="navbar-default"
-          aria-expanded="false"
-        >
-          <span className="sr-only">Open main menu</span>
-          <svg
-            className="w-6 h-6"
-            aria-hidden="true"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </button>
-        <div className="hidden md:flex flex-row md:w-auto" id="navbar-default">
-          <ul className="flex flex-row items-center space-x-8 text-sm font-medium px-4 border-r bg-transparent z-40">
+        <div className="flex flex-row md:w-auto">
+          <ul className="hidden md:flex flex-row items-center space-x-8 text-sm font-medium px-4 border-r bg-transparent z-40">
             <li
               className={home ? "text-corekColor1" : "textHover text-white"}
               onClick={() => dispatch({ type: "HOME_SUCCESS" })}
@@ -235,6 +238,12 @@ export default function Navbar() {
               onClick={() => dispatch({ type: "CONTACTUS_SUCCESS" })}
             >
               <Link to="/contactus">Contact Us</Link>
+            </li>
+            <li
+              className={faq ? "text-corekColor1" : "textHover text-white"}
+              onClick={() => dispatch({ type: "FAQ_SUCCESS" })}
+            >
+              <Link to="/faq">Faqs</Link>
             </li>
           </ul>
           <ul className="flex flex-row items-center space-x-6 text-sm font-medium pl-8 bg-transparent z-40">
@@ -280,9 +289,10 @@ export default function Navbar() {
                     </li>
                     <li className="textHover">
                       <Link
-                        onClick={() => {ctxDispatch({ type: "USER_SIGNOUT" });
-                      setAccountdropdown(false)
-                      }}
+                        onClick={() => {
+                          ctxDispatch({ type: "USER_SIGNOUT" });
+                          setAccountdropdown(false);
+                        }}
                         to="/"
                       >
                         Log Out
@@ -301,7 +311,90 @@ export default function Navbar() {
                 </button>
               </li>
             )}
+            <li
+              onClick={() => setSidenav(!sidenav)}
+              className="flex md:hidden items-center text-lg justify-center w-10 h-10 duration-500 rounded-full nav-hover bg-corekColor1"
+            >
+              <GiHamburgerMenu />
+            </li>
           </ul>
+        </div>
+      </div>
+      <div
+        className={`sm:w-96 w-80 h-screen shadow-md text-white bg-corekColor3 overflow-scroll duration-500 right-0 top-0 fixed z-50 ${
+          sidenav ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div
+          onClick={() => setSidenav(false)}
+          className="absolute text-2xl font-bold cursor-pointer nav-hover top-6 right-8"
+        >
+          <AiOutlineClose />
+        </div>
+        <ul className="flex flex-col gap-3 pl-8 mt-16 lg:hidden">
+          <li
+            onClick={() => {
+              setSidenav(false);
+              dispatch({ type: "HOME_SUCCESS" });
+            }}
+            className={home ? "text-corekColor1" : "textHover text-white"}
+          >
+            <Link to="/">HOME</Link>
+          </li>
+          <li onClick={() => {
+              setSidenav(false);
+              dispatch({ type: "COURSES_SUCCESS" });
+            }}
+            className={courses ? "text-corekColor1" : "textHover text-white"}>
+            <Link to="/courses">COURSES</Link>
+          </li>
+          <li onClick={() => {
+              setSidenav(false);
+              dispatch({ type: "ABOUTUS_SUCCESS" });
+            }}
+            className={aboutus ? "text-corekColor1" : "textHover text-white"}>
+            <Link to="/aboutus">ABOUT US</Link>
+          </li>
+          <li onClick={() => {
+              setSidenav(false);
+              dispatch({ type: "CONTACTUS_SUCCESS" });
+            }}
+            className={contactus ? "text-corekColor1" : "textHover text-white"}>
+            <Link to="/contactus">CONTACT US</Link>
+          </li>
+          <li onClick={() => {
+              setSidenav(false);
+              dispatch({ type: "FAQ_SUCCESS" });
+            }}
+            className={faq ? "text-corekColor1" : "textHover text-white"}>
+            <Link to="/faq">Faqs</Link>
+          </li>
+        </ul>
+        <div className="flex flex-col items-center justify-center px-5 mt-10 gap-7 sm:mt-24">
+          <div>
+            <img src={image} className="h-6 w-24 sm:h-10" alt="logo" />
+          </div>
+          <div className="flex flex-col items-center text-sm leading-4 text-white">
+            <p>Address: odim street along obukpa road.</p>
+            <br />
+            <p>Call Us: 09013906114,07032888613.</p>
+            <br />
+            <p>Email: Ejioforjames12@gmail.com</p>
+          </div>
+          <div className="flex flex-row gap-x-6">
+            <div className="footer-icon">
+              <FaFacebookF />
+            </div>
+            <div className="footer-icon">
+              <FaTwitter />
+            </div>
+            <div className="footer-icon">
+              <FaInstagram />
+            </div>
+            <div className="footer-icon">
+              <FaLinkedinIn />
+            </div>
+          </div>
         </div>
       </div>
     </nav>

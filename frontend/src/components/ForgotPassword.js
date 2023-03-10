@@ -31,7 +31,7 @@ const Forgot_password = ({sideforgotpassword, setSideforgotpassword, sideresetpa
       >
         <AiOutlineClose className="font-bold" />
       </div>
-      <div className="w-1/3 bg-white px-10 py-7 text-gray-500 text-center">
+      <div className="w-full md:w-1/3 bg-white px-4 md:px-10 py-7 text-gray-500 text-center">
         <p className="text-black text-xl font-semibold">
           Forgot Password
         </p>

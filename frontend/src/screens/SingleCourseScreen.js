@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useReducer } from "react";
 import axios from "axios";
 import { getError } from "../utils.js";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { AiOutlineRight } from "react-icons/ai";
+// import { AiOutlineRight } from "react-icons/ai";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
-import teacherImg from "../assets/teacher.jpeg";
+// import teacherImg from "../assets/teacher.jpeg";
 import SingleCourseInfo from "../singleCourseComp/SingleCourseInfo";
 import SingleCourseRating from "../singleCourseComp/SingleCourseRating";
 import LoadingBox from "../components/LoadingBox";
@@ -15,7 +15,7 @@ import Course from "../homeScreenComp/Course";
 import { BsArrowUpRightSquare } from "react-icons/bs";
 import courseHeroimg from "../assets/singleCourseHero.jpg";
 import { Store } from "../Store.js";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -35,7 +35,7 @@ const reducer = (state, action) => {
 const SingleCourseScreen = () => {
   const params = useParams();
   const { slug } = params;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const settings = {
     dots: true,
@@ -80,8 +80,11 @@ const SingleCourseScreen = () => {
     courses: [],
   });
 
-  const {state, dispatch: ctxDispatch} = useContext(Store)
-  const {userInfo,cart, cart: {cartItems}} = state
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const {
+    userInfo,
+    cart: { cartItems },
+  } = state;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -138,22 +141,26 @@ const SingleCourseScreen = () => {
   });
 
   const orderHandler = async () => {
-    if(!userInfo) {
-      toast.error("Login to buy a course")
+    if (!userInfo) {
+      toast.error("Login to buy a course");
+      return;
+    }
+    if (userInfo.email === "ejioforjames12@gmail.com") {
+      toast.error("You are not permitted to do this as an admin");
       return;
     }
     const existItem = cartItems.find((x) => x._id === course._id);
     if (existItem) {
-      toast.error('This course is already in your cart');
+      toast.error("This course is already in your cart");
       return;
     }
     ctxDispatch({
-      type: 'CART_ADD_ITEM',
+      type: "CART_ADD_ITEM",
       payload: course,
     });
     navigate("/placeorder");
-    console.log(cartItems)
-  }
+    console.log(cartItems);
+  };
 
   // loading ? (
   //   <LoadingBox />
@@ -162,7 +169,11 @@ const SingleCourseScreen = () => {
   //   <div>{error}</div>
   // )
   // :
-  return (
+  return loading ? (
+    <LoadingBox />
+  ) : error ? (
+    <div>{error}</div>
+  ) : (
     <div>
       <div className="relative">
         <img
@@ -171,11 +182,11 @@ const SingleCourseScreen = () => {
           alt="hero"
         />
         <div className="absolute z-10 h-full top-0 w-full bg-gradient-to-t opacity-60 from-corekColor3 to-corekColor3"></div>
-        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-5 text-white text-[38px] bottom-24 left-16">
+        <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-4 md:pl-5 text-white text-2xl md:text-[38px] bottom-24 md:left-16">
           {course.category}
         </div>
       </div>
-      <div className="ml-16 mt-4 flex flex-row items-center space-x-3 text-xs">
+      <div className="ml-4 md:ml-16 mt-4 flex flex-row items-center space-x-3 text-xs">
         <Link to="/">
           <div className="flex flex-row items-center space-x-2 duration-300 hover:text-corekColor1">
             <span>Home</span>
@@ -198,10 +209,10 @@ const SingleCourseScreen = () => {
           <span>{course.name}</span>
         </div>
       </div>
-      <div className="flex flex-row px-16 mt-20 space-x-7">
+      <div className="flex flex-col md:flex-row px-4 md:px-16 mt-16 md:space-x-7">
         <div className="basis-3/4 h-40">
-          <h1 className="text-3xl font-bold">{course.name}</h1>
-          <div className="flex flex-row mt-10 w-full justify-between">
+          <h1 className="text-2xl md:text-3xl font-bold">{course.name}</h1>
+          <div className="flex flex-col space-y-5 md:flex-row mt-8 w-full justify-between">
             <div className="flex flex-row space-x-4">
               <div className="flex flex-row space-x-2 items-center">
                 <img
@@ -223,19 +234,20 @@ const SingleCourseScreen = () => {
                 <SingleCourseRating rating={course.rating} />
               </div>
             </div>
-            <div className="flex flex-row space-x-3 items-center">
-              <p className="text-3xl text-corekColor2 font-semibold">
+            <div className="flex flex-row justify-between space-x-3 items-center">
+              <p className="text-xl md:text-3xl text-corekColor2 font-semibold">
                 ${course.price}.00
               </p>
-              <button 
-              onClick={orderHandler}
-              className="px-5 py-2 border border-corekColor1 hover:bg-white duration-500 bg-corekColor1 rounded text-sm font-bold">
+              <button
+                onClick={orderHandler}
+                className="px-5 py-2 border border-corekColor1 hover:bg-white duration-500 bg-corekColor1 rounded text-sm font-bold"
+              >
                 BUY NOW
               </button>
             </div>
           </div>
           <img
-            className="mt-10 rounded w-full h-96"
+            className="mt-10 rounded w-full h-68 md:h-96"
             src={course.image2}
             alt="courseImg"
           />
@@ -259,7 +271,7 @@ const SingleCourseScreen = () => {
               <p className="text-2xl font-semibold">YOU MAY LIKE</p>
               <hr className="w-12 h-1 bg-corekColor1 mt-1.5" />
             </div>
-            <Slider className="flex flex-row space-x-2 mt-6" {...settings}>
+            <Slider className="flex flex-row md:space-x-2 mt-6" {...settings}>
               {likeCourses.map((course) => (
                 <div key={course._id}>
                   <Course course={course}></Course>
@@ -267,18 +279,45 @@ const SingleCourseScreen = () => {
               ))}
             </Slider>
           </div>
-          <div className="mt-16 text-white"> i am the best</div>
         </div>
-        <div className="basis-1/4">
-          <div className="border-l pl-4">
-            <p className="font-semibold pl-4 text-lg -ml-5 pb-4 border-l-4 border-corekColor1">
+        <div className="basis-1/4 w-full mt-16">
+          <div className="md:border-l md:pl-4">
+            <p className="font-semibold -ml-4 pl-4 text-lg md:-ml-5 pb-4 border-l-4 border-corekColor1">
               ALL COURSES
             </p>
             <div className="flex flex-col space-y-3 text-sm">
-              <p>Forex</p>
-              <p>Cryptocurrency</p>
-              <p>Stock Trading</p>
-              <p>Digital Marketing</p>
+              <Link
+                onClick={() =>
+                  ctxDispatch({ type: "ADD_SEARCH", payload: "forex" })
+                }
+                to="/courses"
+                className="textHover"
+              >
+                Forex
+              </Link>
+              <Link
+                onClick={() =>
+                  ctxDispatch({ type: "ADD_SEARCH", payload: "cryptocurrency" })
+                }
+                to="/courses"
+                className="textHover"
+              >
+                Cryptocurrency
+              </Link>
+              <Link
+              onClick={() =>
+                ctxDispatch({ type: "ADD_SEARCH", payload: "stock trading" })
+              }
+              to="/courses"
+              className="textHover"
+              >Stock Trading</Link>
+              <Link
+              onClick={() =>
+                ctxDispatch({ type: "ADD_SEARCH", payload: "digital marketing" })
+              }
+              to="/courses"
+              className="textHover"
+              >Digital Marketing</Link>
             </div>
           </div>
           <div className="mt-12">
