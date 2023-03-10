@@ -21,7 +21,7 @@ mongoose
 const app = express()
 
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({extended: false}))
 
 app.use('/api/seed', seedRouter)
 app.use('/api/courses', courseRouter)
@@ -30,6 +30,21 @@ app.use('/api/orders', orderRouter)
 
 app.use((err,req,res,next) => {
     res.status(500).send({message:err.message})
+})
+
+const __dirname = path.resolve()
+
+app.use(express.static(path.join(__dirname, "../frontend/build")))
+
+app.get("*", function(_, res) {
+  res.sendFile(
+    path.join(__dirname, "../frontend/build/index.html"),
+    function (err) {
+      if (err) {
+        res.status(500).send(err)
+      }
+    }
+  )
 })
 
 const port = process.env.PORT || 4000;
