@@ -73,27 +73,35 @@ function ContactScreen() {
           </div>
         </div>
       </div>
-      <div className='parent-form'>
+      <div
+      className='parent-form'>
         <h1>
           Fill the form below so we can get to know you and your needs better.
         </h1>
-        <form>
+        <form
+        action="https://getform.io/f/9b1f5d26-8970-4040-987a-949a285fc149"
+        method="POST"
+        >
           <div className="form-div">
             <input
               type="text"
               placeholder="Name *"
+              name="name"
             />
             <input
               type="email"
               placeholder="Email *"
+              name="email"
             />
             <input
               type="text"
               placeholder="Subject *"
+              name="subject"
             />
             <textarea
               type="text"
               placeholder="Message *"
+              name="message"
             />
             <button type='submit'>SUBMIT</button>
           </div>
