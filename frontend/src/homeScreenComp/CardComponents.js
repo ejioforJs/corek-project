@@ -88,9 +88,9 @@ const CardComponents = () => {
             <p className="text-gray-600">Taught by professional traders.</p>
           </div>
         </div>
-        <div onClick={goCourses} className="border text-black rounded-md border-corekColor1 py-3 px-3 hover:bg-corekColor1 hover:text-black duration-500">
+        <button onClick={goCourses} className="border text-black rounded-md border-corekColor1 py-3 px-3 hover:bg-corekColor1 hover:text-black duration-500">
           EXPLORE COURSES
-        </div>
+        </button>
       </div>
       <div
         data-aos="fade-left"
