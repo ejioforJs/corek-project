@@ -7,7 +7,7 @@ import community from "../assets/community.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { toast } from 'react-toastify';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CardComponents = () => {
   useEffect(() => {
