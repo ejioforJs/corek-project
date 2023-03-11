@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 // import { Store } from "../Store";
 import AddcourseComponent from "./AddcourseComponent";
 import AdduserComponent from "./AdduserComponent";
