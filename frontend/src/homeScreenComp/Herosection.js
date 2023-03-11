@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import image3 from "../assets/image3.jpg";
 
 // function SampleNextArrow(props) {

@@ -7,6 +7,7 @@ import community from "../assets/community.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { toast } from 'react-toastify';
+import { Link } from "react-router-dom";
 
 const CardComponents = () => {
   useEffect(() => {
@@ -16,7 +17,7 @@ const CardComponents = () => {
   const notAvailable = () => {
     toast.warning("Functionality not available yet")
   }
-  
+
   return (
     <div className="w-full px-4 md:px-16 flex flex-col md:flex-row justify-between">
       <div

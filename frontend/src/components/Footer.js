@@ -7,6 +7,7 @@ import {MdOutlineMarkEmailRead} from 'react-icons/md'
 import {FaFacebookF,FaTwitter,FaYoutube,FaInstagram} from 'react-icons/fa'
 import {MdOutlineCopyright} from 'react-icons/md'
 import { Store } from "../Store";
+import { Link } from "react-router-dom";
 
 function Footer() {
     const { dispatch: ctxDispatch } = useContext(Store);
