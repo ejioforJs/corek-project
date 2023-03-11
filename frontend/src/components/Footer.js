@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import '../Styles/Footer.css'
 import corek from '../assets/corek.png'
 import {FiPhone,FiClock} from 'react-icons/fi'
@@ -6,8 +6,10 @@ import {HiOutlineLocationMarker} from 'react-icons/hi'
 import {MdOutlineMarkEmailRead} from 'react-icons/md'
 import {FaFacebookF,FaTwitter,FaYoutube,FaInstagram} from 'react-icons/fa'
 import {MdOutlineCopyright} from 'react-icons/md'
+import { Store } from "../Store";
 
 function Footer() {
+    const { dispatch: ctxDispatch } = useContext(Store);
   return <>
     <div className="footer-div">
         <div className="footer-child">
@@ -23,10 +25,30 @@ function Footer() {
         <div className="courses-div">
             <h1>Courses</h1>
             <div className="course-child">
-            <div className="child">- Forex Trading Courses</div>
-            <div className="child">- Cryptocurrency Trading Courses</div>
-            <div className="child">- Stock Trading Courses</div>
-            <div className="child">- Digital Marketing Courses</div>
+            <Link 
+            onClick={() =>
+                ctxDispatch({ type: "ADD_SEARCH", payload: "forex" })
+              }
+              to="/courses"
+            className="child">- Forex Trading Courses</Link>
+            <Link 
+            onClick={() =>
+                ctxDispatch({ type: "ADD_SEARCH", payload: "cryptocurrency" })
+              }
+              to="/courses"
+            className="child">- Cryptocurrency Trading Courses</Link>
+            <Link 
+            onClick={() =>
+                ctxDispatch({ type: "ADD_SEARCH", payload: "stock trading" })
+              }
+              to="/courses"
+            className="child">- Stock Trading Courses</Link>
+            <Link 
+            onClick={() =>
+                ctxDispatch({ type: "ADD_SEARCH", payload: "digital marketing" })
+              }
+              to="/courses"
+            className="child">- Digital Marketing Courses</Link>
             </div>
         </div>
         <div className="newsletter">

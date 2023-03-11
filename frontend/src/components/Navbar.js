@@ -205,11 +205,13 @@ export default function Navbar() {
       </div>
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <div className="flex items-center">
+          <Link to="/">
           <img
             src={image}
             className="h-6 w-16 md:w-28 mr-3 sm:h-10 z-40"
             alt="Corek Logo"
           />
+          </Link>
         </div>
         <div className="flex flex-row md:w-auto">
           <ul className="hidden md:flex flex-row items-center space-x-8 text-sm font-medium px-4 border-r bg-transparent z-40">

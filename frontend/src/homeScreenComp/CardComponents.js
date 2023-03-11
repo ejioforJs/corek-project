@@ -16,6 +16,7 @@ const CardComponents = () => {
   const notAvailable = () => {
     toast.warning("Functionality not available yet")
   }
+  
   return (
     <div className="w-full px-4 md:px-16 flex flex-col md:flex-row justify-between">
       <div
@@ -80,9 +81,9 @@ const CardComponents = () => {
             <p className="text-gray-600">Taught by professional traders.</p>
           </div>
         </div>
-        <button className="border text-black rounded-md border-corekColor1 py-3 px-3 hover:bg-corekColor1 hover:text-black duration-500">
+        <Link to="/courses" className="border text-black rounded-md border-corekColor1 py-3 px-3 hover:bg-corekColor1 hover:text-black duration-500">
           EXPLORE COURSES
-        </button>
+        </Link>
       </div>
       <div
         data-aos="fade-left"

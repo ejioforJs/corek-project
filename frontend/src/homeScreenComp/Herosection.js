@@ -63,9 +63,9 @@ const Herosection = () => {
           Use To Learn, Practise and Drastically Improve. Their Investment
           Results.
         </p>
-        <button className="border text-white rounded-md border-corekColor1 w-auto py-3 px-5 mt-6 md:mt-10 hover:bg-corekColor1 hover:text-black duration-500">
+        <Link to="/courses" className="border text-white rounded-md border-corekColor1 w-auto py-3 px-5 mt-6 md:mt-10 hover:bg-corekColor1 hover:text-black duration-500">
           EXPLORE COURSES NOW
-        </button>
+        </Link>
       </div>
     </div>
   );
