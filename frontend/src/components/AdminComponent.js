@@ -1,10 +1,9 @@
 import axios from "axios";
 import React, { useContext, useEffect, useReducer } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Store } from "../Store";
-import { getError } from "../utils";
+// import { Store } from "../Store";
 import AddcourseComponent from "./AddcourseComponent";
 import AdduserComponent from "./AdduserComponent";
+import LoadingBox from "./LoadingBox";
 import RemovecourseComponent from "./RemovecourseComponent";
 import RemoveuserComponent from "./RemoveuserComponent";
 
@@ -59,9 +58,8 @@ const reducer = (state, action) => {
 };
 
 const AdminComponent = () => {
-  const navigate = useNavigate();
   const [
-    { addcourse, removecourse, adduser, removeuser, loading, error, courses },
+    { addcourse, removecourse, adduser, removeuser, loading, error },
     dispatch,
   ] = useReducer(reducer, {
     addcourse: true,
@@ -70,11 +68,10 @@ const AdminComponent = () => {
     removeuser: false,
     loading: false,
     error: "",
-    courses: [],
   });
 
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { userInfo } = state;
+  // const { state, dispatch: ctxDispatch } = useContext(Store);
+  // const { userInfo } = state;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,7 +86,12 @@ const AdminComponent = () => {
     fetchData();
   }, []);
 
-  return (
+  return loading ? (
+    <LoadingBox />
+  ): error ? (
+    <div>{error}</div>
+  ):
+  (
     <div className="mt-24 flex flex-col sm:flex-row gap-6 px-2 sm:px-16">
       <div className="basis-1/4 flex flex-col gap-3">
         <div

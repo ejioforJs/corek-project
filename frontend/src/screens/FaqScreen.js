@@ -1,6 +1,5 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useReducer } from "react";
 import aboutbg from "../assets/about-bg.jpg";
-import { MdOutlineNavigateNext } from "react-icons/md";
 import "../Styles/FaqScreen.css";
 import { Link } from "react-router-dom";
 
