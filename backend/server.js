@@ -28,23 +28,23 @@ app.use('/api/courses', courseRouter)
 app.use('/api/users', userRouter)
 app.use('/api/orders', orderRouter)
 
-app.use((err,req,res,next) => {
-    res.status(500).send({message:err.message})
-})
-
 const __dirname = path.resolve()
 
-app.use(express.static(path.join(__dirname, "../frontend/build")))
+app.use(express.static(path.join(__dirname, "/frontend/build")))
 
-app.get("*", function(_, res) {
+app.get("*", function(req, res) {
   res.sendFile(
-    path.join(__dirname, "../frontend/build/index.html"),
+    path.join(__dirname, "/frontend/build/index.html"),
     function (err) {
       if (err) {
         res.status(500).send(err)
       }
     }
   )
+})
+
+app.use((err,req,res,next) => {
+    res.status(500).send({message:err.message})
 })
 
 const port = process.env.PORT || 4000;
