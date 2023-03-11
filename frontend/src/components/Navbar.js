@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import image from "../assets/corek.png";
 import { Store } from "../Store";
 import ForgotPassword from "./ForgotPassword";
@@ -77,6 +77,7 @@ const reducer = (state, action) => {
 };
 
 export default function Navbar() {
+  const navigate = useNavigate()
   const [{ home, courses, aboutus, contactus, faq }, dispatch] = useReducer(
     reducer,
     {
@@ -134,6 +135,10 @@ export default function Navbar() {
     }
   }, [location, slug]);
   console.log(location.pathname);
+
+  const toHome = () => {
+    navigate("/")
+  }
 
   return (
     <nav className="bg-transparent z-40 border-gray-200 px-4 sm:px-16 py-3 md:py-6 dark:bg-gray-900">
@@ -204,14 +209,12 @@ export default function Navbar() {
         </div>
       </div>
       <div className="container flex flex-wrap items-center justify-between mx-auto">
-        <div className="flex items-center">
-          <Link to="/">
+        <div onClick={toHome} className="flex items-center">
           <img
             src={image}
             className="h-6 w-16 md:w-28 mr-3 sm:h-10 z-40"
             alt="Corek Logo"
           />
-          </Link>
         </div>
         <div className="flex flex-row md:w-auto">
           <ul className="hidden md:flex flex-row items-center space-x-8 text-sm font-medium px-4 border-r bg-transparent z-40">
