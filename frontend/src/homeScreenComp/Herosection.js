@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import image3 from "../assets/image3.jpg";
 
 // function SampleNextArrow(props) {
@@ -38,6 +38,7 @@ import image3 from "../assets/image3.jpg";
 // }
 
 const Herosection = () => {
+  const navigate = useNavigate()
   // const settings = {
   //   dots: true,
   //   fade: true,
@@ -52,6 +53,9 @@ const Herosection = () => {
   //   nextArrow: <SampleNextArrow />,
   // prevArrow: <SamplePrevArrow />,
   // };
+  const goCourses = () => {
+    navigate("/courses")
+  }
   return (
       <div className="relative">
       <img className="h-[70vh] md:h-screen w-full -mt-24" src={image3} alt="hero" />
@@ -64,9 +68,9 @@ const Herosection = () => {
           Use To Learn, Practise and Drastically Improve. Their Investment
           Results.
         </p>
-        <Link to="/courses" className="border text-white rounded-md border-corekColor1 w-auto py-3 px-5 mt-6 md:mt-10 hover:bg-corekColor1 hover:text-black duration-500">
+        <div onClick={goCourses} className="border text-white rounded-md border-corekColor1 w-auto py-3 px-5 mt-6 md:mt-10 hover:bg-corekColor1 hover:text-black duration-500">
           EXPLORE COURSES NOW
-        </Link>
+        </div>
       </div>
     </div>
   );

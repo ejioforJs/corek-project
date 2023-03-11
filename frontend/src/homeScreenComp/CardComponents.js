@@ -7,15 +7,21 @@ import community from "../assets/community.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { toast } from 'react-toastify';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CardComponents = () => {
   useEffect(() => {
     AOS.init();
   }, []);
 
+  const navigate = useNavigate()
+
   const notAvailable = () => {
     toast.warning("Functionality not available yet")
+  }
+
+  const goCourses = () => {
+    navigate("/courses")
   }
 
   return (
@@ -82,9 +88,9 @@ const CardComponents = () => {
             <p className="text-gray-600">Taught by professional traders.</p>
           </div>
         </div>
-        <Link to="/courses" className="border text-black rounded-md border-corekColor1 py-3 px-3 hover:bg-corekColor1 hover:text-black duration-500">
+        <div onClick={goCourses} className="border text-black rounded-md border-corekColor1 py-3 px-3 hover:bg-corekColor1 hover:text-black duration-500">
           EXPLORE COURSES
-        </Link>
+        </div>
       </div>
       <div
         data-aos="fade-left"
