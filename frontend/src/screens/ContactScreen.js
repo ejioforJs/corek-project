@@ -11,7 +11,7 @@ function ContactScreen() {
     <>
       <div className="relative">
         <img
-          className="h-[55vh] w-full -mt-24"
+          className="h-[33vh] md:h-[55vh] w-full -mt-24"
           src={aboutbg}
           alt="hero"
         />

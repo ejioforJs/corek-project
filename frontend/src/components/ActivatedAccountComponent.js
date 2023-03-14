@@ -1,7 +1,7 @@
 import React from 'react'
 import courseHeroimg from "../assets/singleCourseHero.jpg";
 
-const ComingsoonScreen = () => {
+const ActivatedAccountComponent = () => {
   return (
     <div>
       <div className="relative">
@@ -12,15 +12,15 @@ const ComingsoonScreen = () => {
         />
         <div className="absolute z-10 h-full top-0 w-full bg-gradient-to-t opacity-60 from-corekColor3 to-corekColor3"></div>
         <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-4 md:pl-5 text-white text-2xl md:text-[38px] bottom-24 md:left-16">
-          COMING SOON
+          ACCOUNT ACTIVATED
         </div>
       </div>
-      <div className='px-16 mt-12 text-center'>
-        <div className='text-2xl font-semibold'>Stripe payment functionality coming soon...</div>
-        <div className='mt-8 flex justify-center'><iframe title='coming soon' src="https://giphy.com/embed/iTWomlMFQXIA5DN0VZ" width="480" height="321" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p></p></div>
+      <div className='mt-16 px-4 md:px-16'>
+        <div className='text-2xl font-bold'>User Activation</div>
+        <div className='mt-8 bg-[#90EE90] p-4 text-sm text-green-900'>Congrats,your account have been successfully activated. You can login now!!</div>
       </div>
     </div>
   )
 }
 
-export default ComingsoonScreen
+export default ActivatedAccountComponent

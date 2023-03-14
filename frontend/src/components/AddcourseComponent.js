@@ -86,14 +86,7 @@ const AddcourseComponent = () => {
         });
         setLoading(false);
       } catch (error) {
-        toast({
-          title: "Error Occured!",
-          description: error.response.data.message,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-          position: "bottom",
-        });
+        toast.error("Oooops, an error occured!!");
         setLoading(false);
       }
   };
@@ -113,9 +106,9 @@ const AddcourseComponent = () => {
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
-      data.append("upload_preset", "chat-app");
-      data.append("cloud_name", "piyushproj");
-      fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+      data.append("upload_preset", "corek-project");
+      data.append("cloud_name", "dltwxrndj");
+      fetch("https://api.cloudinary.com/v1_1/dltwxrndj/image/upload", {
         method: "post",
         body: data,
       })

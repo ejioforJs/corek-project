@@ -14,6 +14,8 @@ import ComingsoonScreen from "./screens/ComingsoonScreen";
 import AboutScreen from "./screens/AboutScreen";
 import ContactScreen from "./screens/ContactScreen";
 import FaqScreen from "./screens/FaqScreen";
+import ActivateRegisterComponent from "./components/ActivateRegisterComponent";
+import ActivatedAccountComponent from "./components/ActivatedAccountComponent";
 
 function App() {
   // useEffect(() => {
@@ -48,6 +50,8 @@ function App() {
             <Route path="/aboutus" element={<AboutScreen />} />
             <Route path="contactus" element={<ContactScreen />} />
             <Route path="/faq" element={<FaqScreen />} />
+            <Route path="/register/activate" element={<ActivateRegisterComponent />} />
+            <Route path="/users/activated" element={<ActivatedAccountComponent />} />
           </Routes>
         </div>
         <Footer />

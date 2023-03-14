@@ -71,7 +71,7 @@ function FaqScreen() {
   return (
     <>
       <div className="relative">
-        <img className="h-[55vh] w-full -mt-24" src={aboutbg} alt="hero" />
+        <img className="h-[33vh] md:h-[55vh] w-full -mt-24" src={aboutbg} alt="hero" />
         <div className="absolute z-10 h-full top-0 w-full bg-gradient-to-t opacity-60 from-corekColor3 to-corekColor3"></div>
         <div className="z-20 absolute border-l-[3px] border-corekColor1 pl-4 md:pl-5 text-white text-2xl md:text-[38px] bottom-24 md:left-16">
           FREQUENTLY ASKED QUESTIONS

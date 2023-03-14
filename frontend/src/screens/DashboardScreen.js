@@ -114,7 +114,7 @@ const DashboardScreen = () => {
     <div>
       <div className="relative">
         <img
-          className="h-[55vh] w-full -mt-24"
+          className="h-[33vh] md:h-[55vh] w-full -mt-24"
           src={courseHeroimg}
           alt="hero"
         />
@@ -136,7 +136,7 @@ const DashboardScreen = () => {
           </div>
         </div>
       </div>
-      {userInfo.email === "ejioforjames12@gmail.com" ? (
+      {userInfo.email === "corekteam12@gmail.com" ? (
         <AdminComponent />
       ) : (
         <div className="mt-16 flex flex-col sm:flex-row gap-6 px-2 sm:px-16">
@@ -176,7 +176,7 @@ const DashboardScreen = () => {
           </div>
           <div className="basis-3/4">
             {dashboard ? (
-              <div data-aos="fade-up" data-aos-duration="1500">
+              <div>
                 <h1 className="font-bold text-2xl">Dashboard</h1>
                 <p className="text-sm text-gray-500 mt-2">
                   From your account dashboard. you can easily check & view your{" "}

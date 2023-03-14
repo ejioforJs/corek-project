@@ -1,19 +1,19 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Store } from '../Store.js';
+// import { Store } from '../Store.js';
 import { getError } from '../utils.js';
 
 const Signup = ({ setSidelogin, sidesignup, setSidesignup }) => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const {dispatch: ctxDispatch} = useContext(Store)
+  // const {dispatch: ctxDispatch} = useContext(Store)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
@@ -24,22 +24,22 @@ const Signup = ({ setSidelogin, sidesignup, setSidesignup }) => {
     return;
   }
   try {
-      const { data } = await axios.post('/api/users/signup', {
+      await axios.post('/api/users/signup', {
         username,
         email,
         password,
       });
-      ctxDispatch({ type: 'USER_SIGNIN', payload: data });
-      localStorage.setItem('userInfo', JSON.stringify(data));
-      setSidesignup(false)
-      toast.success("Sign up successfully")
+      // ctxDispatch({ type: 'USER_SIGNIN', payload: data });
+      // localStorage.setItem('userInfo', JSON.stringify(data));
+      // setSidesignup(false)
+      toast.success("Please visit your email address and activate your account")
       setUsername("")
       setEmail("")
       setPassword("")
       setConfirmPassword("")
       setShowPassword(false)
       setShowConfirmPassword(false)
-      navigate('/dashboardscreen');
+      // navigate('/dashboardscreen');
     } catch (err) {
       toast.error(getError(err));
     }

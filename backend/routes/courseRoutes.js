@@ -19,7 +19,42 @@ courseRouter.get('/slug/:slug', async(req,res) => {
 })
 
 courseRouter.post('/addCourse', async(req,res) => {
-
+    const {name,
+        slug,
+        author, 
+        category,
+        price,
+        image,
+        image2, 
+        rating,
+        description,
+        duration,
+        skill_level,
+        language,
+        instructorImg1,
+        instructorImg2,
+        aka,
+        instructorInfo} = req.body
+        
+        const newCourse = new Course({
+            name,
+        slug,
+        author, 
+        category,
+        price,
+        image,
+        image2, 
+        rating,
+        description,
+        duration,
+        skill_level,
+        language,
+        instructorImg1,
+        instructorImg2,
+        aka,
+        instructorInfo
+        })
+        await newCourse.save()
 })
 
 courseRouter.post('/removeCourse', async(req,res) => {
