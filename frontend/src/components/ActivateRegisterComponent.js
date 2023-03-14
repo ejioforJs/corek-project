@@ -26,7 +26,7 @@ const ActivateRegisterComponent = () => {
         //   navigate("/users/activated");
           return toast.success("account successfully activated");
       } catch (error) {
-        toast.error("Account could not be activated");
+        // toast.error("Account could not be activated");
       }
     };
     fetchData();
