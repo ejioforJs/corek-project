@@ -103,7 +103,7 @@ const AddcourseComponent = () => {
       });
       return;
     }
-    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+    if (pics.type === "image/jpeg" || pics.type === "image/png" || pics.type === "image/jpg") {
       const data = new FormData();
       data.append("file", pics);
       data.append("upload_preset", "corek-project");
