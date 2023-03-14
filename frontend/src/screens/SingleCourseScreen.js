@@ -247,7 +247,7 @@ const SingleCourseScreen = () => {
             </div>
           </div>
           <img
-            className="mt-10 rounded w-full h-68 md:h-96"
+            className="mt-10 rounded h-68 md:h-96"
             src={course.image2}
             alt="courseImg"
           />

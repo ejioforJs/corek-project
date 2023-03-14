@@ -1,21 +1,31 @@
 {
-  "name": "corek-project",
+  "name": "backend",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "build": "cd backend && npm install  && cd ../frontend && npm install && npm run build",
-    "start": "node backend/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "engines": {
+    "node": "16.15.0",
+    "npm": "8.5.5"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ejioforJs/corek-project.git"
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ejioforJs/corek-project/issues"
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.4",
+    "nodemailer": "^6.8.0",
+    "uuid": "^9.0.0"
   },
-  "homepage": "https://github.com/ejioforJs/corek-project#readme"
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
 }
