@@ -23,7 +23,7 @@ function App() {
   // })
   return (
     <BrowserRouter>
-      <div className="globalFont text-gray-800">
+      <div className="globalFont text-gray-800 overflow-hidden">
       <ToastContainer
           position="top-center"
           autoClose={10000}

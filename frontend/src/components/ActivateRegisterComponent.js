@@ -18,7 +18,7 @@ const ActivateRegisterComponent = () => {
       try {
         if (!hash) {
           // return res.status(401).json({message: 'Cannot Validate an User!'})
-          toast.error("cannot validate user");
+          return toast.error("cannot validate user");
         }
         await axios.get(
           `http://localhost:4000/api/users/activate/${hash}`
