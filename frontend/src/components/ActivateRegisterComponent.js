@@ -21,7 +21,7 @@ const ActivateRegisterComponent = () => {
           return toast.error("cannot validate user");
         }
         await axios.get(
-          `http://localhost:4000/api/users/activate/${hash}`
+          `/api/users/activate/${hash}`
         );
         //   navigate("/users/activated");
           return toast.success("account successfully activated");

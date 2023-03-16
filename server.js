@@ -7,6 +7,7 @@ import courseRouter from './routes/courseRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import orderRouter from './routes/orderRoutes.js';
 import cors from "cors"
+const port = process.env.PORT || 4000;
 
 dotenv.config();
 
@@ -14,6 +15,11 @@ mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('connected to db');
+  })
+  .then(() => {
+    app.listen(port, () =>{
+      console.log(`server at http://localhost:${port}`)
+  })
   })
   .catch((err) => {
     console.log(err.message);
@@ -33,21 +39,16 @@ app.use('/api/orders', orderRouter)
 
 const __dirname = path.resolve()
 
-app.use(express.static(path.join(__dirname, "/frontend/build")))
+app.use(express.static(path.join(__dirname, "./frontend/build")))
 
 app.get("*", (req, res) =>
   res.sendFile(
-    path.join(__dirname, "/frontend/build/index.html")
+    path.join(__dirname, "./frontend/build/index.html")
   )
 )
 
 app.use((err,req,res,next) => {
     res.status(500).send({message:err.message})
-})
-
-const port = process.env.PORT || 4000;
-app.listen(port, () =>{
-    console.log(`server at http://localhost:${port}`)
 })
 
 
