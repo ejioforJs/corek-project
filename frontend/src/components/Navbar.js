@@ -318,7 +318,7 @@ export default function Navbar() {
             )}
             <li
               onClick={() => setSidenav(!sidenav)}
-              className="flex md:hidden items-center text-lg justify-center w-10 h-10 duration-500 rounded-full nav-hover bg-corekColor1"
+              className="flex md:hidden items-center text-2xl justify-center w-10 h-10 duration-500 text-corekColor1 nav-hover"
             >
               <GiHamburgerMenu />
             </li>
