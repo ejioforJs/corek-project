@@ -263,17 +263,11 @@ const CoursesScreen = ({ itemsPerPage }) => {
         .reverse()
     : sortAverageRatingLTH
     ? filteredCourses.sort(function (a, b) {
-        return (
-          a.rating.reduce((a, c) => a + c.rating, 0) / a.rating.length -
-          b.rating.reduce((a, c) => a + c.rating, 0) / b.rating.length
-        );
+        return a.rating - b.rating;
       })
     : sortAverageRatingHTL
     ? filteredCourses.sort(function (a, b) {
-        return (
-          b.rating.reduce((a, c) => a + c.rating, 0) / b.rating.length -
-          a.rating.reduce((a, c) => a + c.rating, 0) / a.rating.length
-        );
+        return b.rating - a.rating;
       })
     : null;
 
